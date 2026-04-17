@@ -10,11 +10,9 @@ const PublicLayout = () => {
                     Nombre del proyecto (Mockup Tec de Monterrey)
                 </div>
                 <nav style={{ display: 'flex', gap: '2rem', fontSize: '0.9rem', fontWeight: 600 }}>
-                    <a href="#" style={{ textDecoration: 'none', color: '#333' }}>Inicio</a>
-                    <a href="#" style={{ textDecoration: 'none', color: '#333' }}>Acerca de</a>
-                    <a href="#" style={{ textDecoration: 'none', color: '#333' }}>Juegos</a>
-                    <a href="#" style={{ textDecoration: 'none', color: '#333' }}>Contactar</a>
-                    <a href="#" style={{ textDecoration: 'none', color: '#333' }}>Más</a>
+                    <a href="/login" style={{ textDecoration: 'none', color: '#333' }}>Administrador</a>
+                    <a href="#" style={{ textDecoration: 'none', color: '#333' }}>Juego</a>
+                    <a href="#" style={{ textDecoration: 'none', color: '#333' }}>Contacto</a>
                 </nav>
             </header>
             

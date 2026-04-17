@@ -1,0 +1,9 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@nide.com",
+      "password": "admin"
+    }
+  ]
+}

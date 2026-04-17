@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        navigate('/dashboard');
+        try {
+            const response = await fetch('https://ampi8wp2ei.execute-api.us-east-1.amazonaws.com/admin/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await response.json();
+            
+            if (data.exito) {
+                localStorage.setItem('isAuthenticated', 'true');
+                localStorage.setItem('adminData', JSON.stringify(data));
+                navigate('/dashboard');
+            } else {
+                setError(data.mensaje || 'Credenciales incorrectas');
+            }
+        } catch (err) {
+            setError('Error de conexión con el servidor.');
+        }
     }
 
     return (
@@ -30,14 +52,15 @@ const Login = () => {
                 <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '2rem' }}>Accede a un mundo de aprendizaje y diversión educativa.</p>
                 
                 <form onSubmit={handleLogin}>
+                    {error && <p style={{ color: 'red', marginBottom: '1rem', fontSize: '0.9rem', textAlign: 'center', fontWeight: 'bold' }}>{error}</p>}
                     <div className="input-group">
-                        <label className="input-label">Correo Electrónico</label>
-                        <input className="input-field" type="email" placeholder="Introduce tu correo electrónico aquí" required />
+                        <label className="input-label">Nombre de Usuario</label>
+                        <input className="input-field" type="text" placeholder="Introduce tu usuario aquí" value={email} onChange={(e) => setEmail(e.target.value)} required />
                     </div>
                     
                     <div className="input-group" style={{ marginBottom: '1.5rem' }}>
                         <label className="input-label">Contraseña</label>
-                        <input className="input-field" type="password" placeholder="•••••••••" required />
+                        <input className="input-field" type="password" placeholder="•••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '2rem' }}>

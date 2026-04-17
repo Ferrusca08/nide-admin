@@ -10,6 +10,14 @@ import DetailedAnalysis from './pages/DetailedAnalysis';
 import PlayersList from './pages/PlayersList';
 import AccountManagement from './pages/AccountManagement';
 
+const ProtectedRoute = ({ children }) => {
+  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+
 function App() {
   return (
     <Routes>
@@ -20,9 +28,13 @@ function App() {
       </Route>
 
       {/* Rutas Privadas (Admin Panel) */}
-      <Route element={<MainLayout />}>
+      <Route element={
+        <ProtectedRoute>
+          <MainLayout />
+        </ProtectedRoute>
+      }>
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/dashboard/detalles" element={<DetailedAnalysis />} />
+        <Route path="/dashboard/detalles/:id" element={<DetailedAnalysis />} />
         <Route path="/jugadores" element={<PlayersList />} />
         <Route path="/cuentas" element={<AccountManagement />} />
       </Route>

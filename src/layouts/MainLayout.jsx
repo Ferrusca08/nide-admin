@@ -31,7 +31,10 @@ const MainLayout = () => {
           <button 
             className="nav-item" 
             style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', outline: 'none' }}
-            onClick={() => navigate('/login')}
+            onClick={() => {
+                localStorage.removeItem('isAuthenticated');
+                navigate('/login');
+            }}
           >
             <LogOut size={20} />
             Cerrar Sesión
