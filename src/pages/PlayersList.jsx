@@ -42,6 +42,28 @@ const PlayersList = () => {
       setLoading(false);
   };
 
+  const handleDarBaja = async (player) => {
+      const confirmado = window.confirm(
+          `¿Estás seguro de que deseas DAR DE BAJA a ${player.nombre}?\n\nEsta acción desactivará al alumno. Su historial de partidas se conservará en la base de datos.`
+      );
+      if (!confirmado) return;
+
+      try {
+          const res = await fetch(`https://ampi8wp2ei.execute-api.us-east-1.amazonaws.com/alumno/baja/${player.id_alumno}`, {
+              method: 'PUT',
+          });
+          const data = await res.json();
+          if (data.exito) {
+              alert(`✅ ${player.nombre} ha sido dado de baja correctamente.`);
+              fetchPlayers();
+          } else {
+              alert('Error al dar de baja: ' + data.mensaje);
+          }
+      } catch (e) {
+          alert('Error de conexión al intentar dar de baja.');
+      }
+  };
+
   return (
     <div className="animate-fade-in">
       <h1 className="page-title">Listado de Jugadores</h1>
@@ -107,8 +129,21 @@ const PlayersList = () => {
                   <td style={{ fontWeight: 600 }}>{p.partidas || 0}</td>
                   <td>Nivel {p.nivel || 0}</td>
                   <td style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{p.fecha_reg}</td>
-                  <td>
-                    <button className="btn btn-primary" onClick={() => window.location.href = '#/dashboard/detalles/' + p.id_alumno} style={{ padding: '0.4rem 1rem', fontSize: '0.8rem' }}>Ver Detalle</button>
+                  <td style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => window.location.href = '#/dashboard/detalles/' + p.id_alumno}
+                      style={{ padding: '0.4rem 1rem', fontSize: '0.8rem' }}
+                    >
+                      Ver Detalle
+                    </button>
+                    <button
+                      className="btn"
+                      onClick={() => handleDarBaja(p)}
+                      style={{ padding: '0.4rem 0.9rem', fontSize: '0.8rem', backgroundColor: '#fff1f2', color: '#be123c', border: '1px solid #fecdd3', fontWeight: 600 }}
+                    >
+                      Dar de Baja
+                    </button>
                   </td>
                 </tr>
               ))}
