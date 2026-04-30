@@ -37,13 +37,12 @@ const Login = () => {
             {/* Hero Section */}
             <div style={{ textAlign: 'center', padding: '3rem 0 2rem 0' }}>
                 <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: '#1a1a1a', marginBottom: '1rem' }}>¡Aprende Jugando!</h1>
-                <p style={{ fontSize: '1.1rem', fontWeight: 600, color: '#444', marginBottom: '2rem' }}>Educación Interactiva para Todos</p>
-                <a href="#login" style={{ textDecoration: 'none', color: '#1a1a1a', fontWeight: 'bold', fontSize: '0.9rem' }}>Descubre Más &gt;</a>
+                <p style={{ fontSize: '1.1rem', fontWeight: 600, color: '#444', marginBottom: '1rem' }}>Educación Interactiva para Todos</p>
             </div>
 
-            {/* Banner Placeholder (Green grass like the mockup) */}
-            <div style={{ width: '100%', height: '300px', backgroundColor: '#e2f0d9', backgroundImage: 'linear-gradient(#e2f0d9, #c5e0b4)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '3rem' }}>
-                <p style={{ color: '#5b8c38', fontWeight: 'bold' }}>[ Imagen de Niños Jugando con Tren Ferromex ]</p>
+            {/* Banner Image */}
+            <div style={{ width: '100%', marginBottom: '3rem', display: 'flex', justifyContent: 'center' }}>
+                <img src="/ninos_jugando.jpg" alt="Niños Jugando" style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
             </div>
 
             {/* Login Card */}
@@ -67,20 +66,11 @@ const Login = () => {
                         <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600 }}>
                             <input type="checkbox" defaultChecked /> Recordarme
                         </label>
-                        <a href="#" style={{ color: '#555', textDecoration: 'none', fontWeight: 500 }}>¿Olvidaste tu contraseña?</a>
                     </div>
                     
                     <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '0.75rem', marginBottom: '1rem', backgroundColor: '#3b82f6' }}>
                         Continuar
                     </button>
-                    
-                    <button type="button" className="btn" style={{ width: '100%', padding: '0.75rem', backgroundColor: 'white', border: '1px solid #ccc', color: '#333', fontWeight: 600 }}>
-                        <span style={{ fontWeight: 'bold', fontSize: '1.2rem', marginRight: '0.5rem' }}>G</span> Iniciar sesión con Google
-                    </button>
-                    
-                    <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: '0.9rem', color: '#666' }}>
-                        ¿No tienes cuenta? <a href="#" style={{ color: '#000', textDecoration: 'none', fontWeight: 'bold' }}>Regístrate ahora.</a>
-                    </p>
                 </form>
             </div>
 

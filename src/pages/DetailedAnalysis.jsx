@@ -15,6 +15,18 @@ const DetailedAnalysis = () => {
             const res = await fetch(`https://ampi8wp2ei.execute-api.us-east-1.amazonaws.com/estadisticas/alumno/${id}`);
             const data = await res.json();
             if (data.exito) {
+                if (data.peores_silabas) {
+                    data.peores_silabas = data.peores_silabas.map(item => ({
+                        ...item,
+                        value: Number(item.value)
+                    }));
+                }
+                if (data.evolucion) {
+                    data.evolucion = data.evolucion.map(item => ({
+                        ...item,
+                        time: Number(item.time)
+                    }));
+                }
                 setStats(data);
             }
         } catch (e) {

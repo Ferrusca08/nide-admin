@@ -12,11 +12,14 @@ const Dashboard = () => {
     infantes_riesgo: []
   });
   const [loading, setLoading] = useState(true);
+  const [edadFiltro, setEdadFiltro] = useState('Todas');
 
   useEffect(() => {
     const fetchGeneralStats = async () => {
+        setLoading(true);
         try {
-            const res = await fetch('https://ampi8wp2ei.execute-api.us-east-1.amazonaws.com/estadisticas/general');
+            const url = `https://ampi8wp2ei.execute-api.us-east-1.amazonaws.com/estadisticas/general${edadFiltro !== 'Todas' ? `?edad=${edadFiltro}` : ''}`;
+            const res = await fetch(url);
             const data = await res.json();
             if (data.exito) setStats(data);
         } catch (e) {
@@ -25,7 +28,7 @@ const Dashboard = () => {
         setLoading(false);
     };
     fetchGeneralStats();
-  }, []);
+  }, [edadFiltro]);
 
   if (loading) {
       return <div style={{ padding: '3rem', textAlign: 'center' }}><h2>Cargando motor analítico...</h2></div>;
@@ -41,10 +44,10 @@ const Dashboard = () => {
       
       <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '2rem', background: 'white', padding: '1rem', borderRadius: '8px', border: '1px solid #eaeaea' }}>
         <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Filtrar por:</span>
-        <select className="input-field" style={{ padding: '0.4rem', fontSize: '0.85rem' }}>
-            <option>Rango de Edad (Todas)</option>
+        <select className="input-field" style={{ padding: '0.4rem', fontSize: '0.85rem' }} value={edadFiltro} onChange={e => setEdadFiltro(e.target.value)}>
+            <option value="Todas">Rango de Edad (Todas)</option>
             {stats.por_edad.map((e, i) => (
-                <option key={i}>Alumnos de {e.edad} años</option>
+                <option value={e.edad} key={i}>Alumnos de {e.edad} años</option>
             ))}
         </select>
       </div>

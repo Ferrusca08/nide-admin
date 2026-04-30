@@ -18,6 +18,42 @@ const AccountManagement = () => {
 
   useEffect(() => { fetchAdmins(); }, []);
 
+  const handleDesactivar = async (id_admin) => {
+      if (!window.confirm('¿Estás seguro de que deseas eliminar este administrador?')) return;
+      try {
+          const res = await fetch(`https://ampi8wp2ei.execute-api.us-east-1.amazonaws.com/admin/baja/${id_admin}`, { method: 'DELETE' });
+          const data = await res.json();
+          if (data.exito) {
+              alert('Administrador eliminado');
+              fetchAdmins();
+          } else {
+              alert('Error: ' + data.mensaje);
+          }
+      } catch (e) {
+          alert('Error de conexión con el servidor');
+      }
+  };
+
+  const handleCambiarPassword = async (id_admin) => {
+      const nuevaContrasena = window.prompt('Introduce la nueva contraseña para este administrador:');
+      if (!nuevaContrasena) return;
+      try {
+          const res = await fetch(`https://ampi8wp2ei.execute-api.us-east-1.amazonaws.com/admin/password/${id_admin}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ contrasena: nuevaContrasena })
+          });
+          const data = await res.json();
+          if (data.exito) {
+              alert('Contraseña actualizada correctamente.');
+          } else {
+              alert('Error: ' + data.mensaje);
+          }
+      } catch (e) {
+          alert('Error de conexión con el servidor');
+      }
+  };
+
   const handleCrear = async () => {
       if (!nombre || !contrasena) return alert('Completa los campos de usuario y contraseña');
       setLoading(true);
@@ -90,7 +126,10 @@ const AccountManagement = () => {
                   <td style={{ color: 'var(--text-main)' }}>{a.nombre}</td>
                   <td style={{ color: 'var(--text-muted)' }}>{a.fecha_reg ? new Date(a.fecha_reg).toLocaleDateString() : 'N/A'}</td>
                   <td>
-                    <button className="btn btn-danger" style={{ padding: '0.4rem 1rem', fontSize: '0.8rem', backgroundColor: '#e11d48' }}>Desactivar</button>
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <button className="btn btn-primary" onClick={() => handleCambiarPassword(a.id_admin)} style={{ padding: '0.4rem 1rem', fontSize: '0.8rem', backgroundColor: '#3b82f6' }}>Cambiar Clave</button>
+                        <button className="btn btn-danger" onClick={() => handleDesactivar(a.id_admin)} style={{ padding: '0.4rem 1rem', fontSize: '0.8rem', backgroundColor: '#e11d48' }}>Desactivar</button>
+                    </div>
                   </td>
                 </tr>
               ))}
