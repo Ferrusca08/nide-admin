@@ -1,0 +1,16 @@
+{
+  "name": "nide-admin-backend",
+  "version": "1.0.0",
+  "description": "Backend Serverless API para juego educativo",
+  "main": "index.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node app.mjs"
+  },
+  "dependencies": {
+    "@codegenie/serverless-express": "^4.14.1",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.9.7"
+  }
+}
